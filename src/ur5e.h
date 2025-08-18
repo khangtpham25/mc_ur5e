@@ -34,7 +34,7 @@ extern "C"
     }
     else
     {
-      mc_rtc::log::error("Aliengo module Cannot create an object of type {}", n);
+      mc_rtc::log::error("UR5e module Cannot create an object of type {}", n);
       return nullptr;
     }
   }
