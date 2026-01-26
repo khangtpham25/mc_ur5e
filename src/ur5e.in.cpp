@@ -16,7 +16,7 @@ static const std::string MC_UR5E_DESCRIPTION_PATH = "@MC_UR5E_DESCRIPTION_PATH@"
 namespace mc_robots
 {
 
-UR5eRobotModule::UR5eRobotModule() : mc_rbdyn::RobotModule(MC_UR5E_DESCRIPTION_PATH, "ur5e")
+UR5eRobotModule::UR5eRobotModule(const std::string & name) : mc_rbdyn::RobotModule(MC_UR5E_DESCRIPTION_PATH, name, MC_UR5E_DESCRIPTION_PATH + "/urdf/ur5e.urdf")
 {
   // True if the robot has a fixed base, false otherwise
   bool fixed = true;
