@@ -16,10 +16,8 @@ static const std::string MC_UR5E_DESCRIPTION_PATH = "@MC_UR5E_DESCRIPTION_PATH@"
 namespace mc_robots
 {
 
-UR5eRobotModule::UR5eRobotModule() : mc_rbdyn::RobotModule(MC_UR5E_DESCRIPTION_PATH, "ur5e")
+UR5eRobotModule::UR5eRobotModule(bool fixed) : mc_rbdyn::RobotModule(MC_UR5E_DESCRIPTION_PATH, "ur5e")
 {
-  // True if the robot has a fixed base, false otherwise
-  bool fixed = true;
   // Makes all the basic initialization that can be done from an URDF file
   init(rbd::parsers::from_urdf_file(urdf_path, fixed));
 
