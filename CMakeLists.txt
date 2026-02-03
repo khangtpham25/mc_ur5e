@@ -1,10 +1,10 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.21)
 
 set(CXX_DISABLE_WERROR 1)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 set(PROJECT_NAME mc_ur5e)
-set(PROJECT_DESCRIPTION "UR5e robot module for mc_rtc")
+set(PROJECT_DESCRIPTION "UR5e | UR7e robot module for mc_rtc")
 
 project(${PROJECT_NAME} LANGUAGES CXX VERSION 1.0.0)
 include(CTest)
