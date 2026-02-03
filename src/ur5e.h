@@ -43,6 +43,7 @@ extern "C"
     else if(n == "UR7eFloatingBase")
     {
       return new mc_robots::UR5eRobotModule("ur7e", false);
+    }
     else
     {
       mc_rtc::log::error("UR5e module Cannot create an object of type {}", n);
