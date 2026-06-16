@@ -2,8 +2,8 @@
 
 #include <RBDyn/parsers/urdf.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 namespace
 {
@@ -16,19 +16,20 @@ static const std::string MC_UR5E_DESCRIPTION_PATH = "@MC_UR5E_DESCRIPTION_PATH@"
 namespace mc_robots
 {
 
-UR5eRobotModule::UR5eRobotModule(const std::string & name, bool fixed) : mc_rbdyn::RobotModule(MC_UR5E_DESCRIPTION_PATH, "ur5e")
+UR5eRobotModule::UR5eRobotModule(const std::string & name, bool fixed)
+: mc_rbdyn::RobotModule(MC_UR5E_DESCRIPTION_PATH, "ur5e")
 {
   // Makes all the basic initialization that can be done from an URDF file
   init(rbd::parsers::from_urdf_file(urdf_path, fixed));
 
   // Automatically load the convex hulls associated to each body
   std::string convexPath = path + "/convex/" + name + "/";
-  bfs::path p(convexPath);
-  if(bfs::exists(p) && bfs::is_directory(p))
+  fs::path p(convexPath);
+  if(fs::exists(p) && fs::is_directory(p))
   {
-    std::vector<bfs::path> files;
-    std::copy(bfs::directory_iterator(p), bfs::directory_iterator(), std::back_inserter(files));
-    for(const bfs::path & file : files)
+    std::vector<fs::path> files;
+    std::copy(fs::directory_iterator(p), fs::directory_iterator(), std::back_inserter(files));
+    for(const fs::path & file : files)
     {
       size_t off = file.filename().string().rfind("-ch.txt");
       if(off != std::string::npos)
@@ -61,37 +62,25 @@ UR5eRobotModule::UR5eRobotModule(const std::string & name, bool fixed) : mc_rbdy
 
   // Define a minimal set of self-collisions
   _minimalSelfCollisions = {
-      {"base_link", "upper_arm_link", 0.01, 0.001, 0.0},
-      {"base_link", "forearm_link", 0.01, 0.001, 0.0},
-      {"base_link", "wrist_1_link", 0.01, 0.001, 0.0},
-      {"base_link", "wrist_2_link", 0.01, 0.001, 0.0},
+      {"base_link", "upper_arm_link", 0.01, 0.001, 0.0},    {"base_link", "forearm_link", 0.01, 0.001, 0.0},
+      {"base_link", "wrist_1_link", 0.01, 0.001, 0.0},      {"base_link", "wrist_2_link", 0.01, 0.001, 0.0},
       {"base_link", "wrist_3_link", 0.01, 0.001, 0.0},
 
-      {"shoulder_link", "forearm_link", 0.01, 0.001, 0.0},
-      {"shoulder_link", "wrist_1_link", 0.01, 0.001, 0.0},
-      {"shoulder_link", "wrist_2_link", 0.01, 0.001, 0.0},
-      {"shoulder_link", "wrist_3_link", 0.01, 0.001, 0.0},
+      {"shoulder_link", "forearm_link", 0.01, 0.001, 0.0},  {"shoulder_link", "wrist_1_link", 0.01, 0.001, 0.0},
+      {"shoulder_link", "wrist_2_link", 0.01, 0.001, 0.0},  {"shoulder_link", "wrist_3_link", 0.01, 0.001, 0.0},
 
-      {"upper_arm_link", "wrist_1_link", 0.01, 0.001, 0.0},
-      {"upper_arm_link", "wrist_2_link", 0.01, 0.001, 0.0},
+      {"upper_arm_link", "wrist_1_link", 0.01, 0.001, 0.0}, {"upper_arm_link", "wrist_2_link", 0.01, 0.001, 0.0},
       {"upper_arm_link", "wrist_3_link", 0.01, 0.001, 0.0}};
   _commonSelfCollisions = _minimalSelfCollisions;
 
-  //Ref joint order
+  // Ref joint order
   _ref_joint_order = {"shoulder_pan_joint", "shoulder_lift_joint", "elbow_joint",
-		      "wrist_1_joint", "wrist_2_joint", "wrist_3_joint"
-  };
+                      "wrist_1_joint",      "wrist_2_joint",       "wrist_3_joint"};
 
   // Stance: joint name, angle in degrees
-  std::map<std::string, double> starting
-  {
-    {"shoulder_pan_joint", 0.0},
-    {"shoulder_lift_joint", 0.0},
-    {"elbow_joint", 0.0},
-    {"wrist_1_joint", 0.0},
-    {"wrist_2_joint", 0.0},
-    {"wrist_3_joint", 0.0}
-  };
+  std::map<std::string, double> starting{{"shoulder_pan_joint", 0.0}, {"shoulder_lift_joint", 0.0},
+                                         {"elbow_joint", 0.0},        {"wrist_1_joint", 0.0},
+                                         {"wrist_2_joint", 0.0},      {"wrist_3_joint", 0.0}};
 
   for(const auto & j : mb.joints())
   {
