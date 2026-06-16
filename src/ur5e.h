@@ -1,16 +1,16 @@
 #pragma once
 
-#include <mc_rbdyn/RobotModuleMacros.h>
-#include <mc_rtc/logging.h>
 #include <mc_rbdyn/RobotModule.h>
+#include <mc_rbdyn/RobotModuleMacros.h>
 #include <mc_robots/api.h>
+#include <mc_rtc/logging.h>
 
 namespace mc_robots
 {
 
 struct MC_ROBOTS_DLLAPI UR5eRobotModule : public mc_rbdyn::RobotModule
 {
-  UR5eRobotModule(const std::string &name, bool fixed);
+  UR5eRobotModule(const std::string & name, bool fixed);
 };
 
 } // namespace mc_robots
@@ -31,7 +31,7 @@ extern "C"
     if(n == "UR5e")
     {
       return new mc_robots::UR5eRobotModule("ur5e", true);
-    } 
+    }
     else if(n == "UR5eFloatingBase")
     {
       return new mc_robots::UR5eRobotModule("ur5e", false);
