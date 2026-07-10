@@ -17,7 +17,7 @@ namespace mc_robots
 {
 
 UR5eRobotModule::UR5eRobotModule(const std::string & name, bool fixed)
-: mc_rbdyn::RobotModule(MC_UR5E_DESCRIPTION_PATH, "ur5e")
+: mc_rbdyn::RobotModule(MC_UR5E_DESCRIPTION_PATH, name)
 {
   // Makes all the basic initialization that can be done from an URDF file
   init(rbd::parsers::from_urdf_file(urdf_path, fixed));
